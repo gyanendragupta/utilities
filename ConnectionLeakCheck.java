@@ -1,5 +1,3 @@
-package com.fiftyhz.util;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,7 +10,7 @@ import java.util.stream.Stream;
 public class ConnectionLeakCheck {
 	
 	public static void main(String[] a) {
-		try (Stream<Path> paths = Files.walk(Paths.get("C://Users//Gyanendra Gupta//git//Current-Dev"))) {
+		try (Stream<Path> paths = Files.walk(Paths.get("C://Users//Gyanendra Gupta//git"))) {
 			paths.filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".java")).forEach(new checkConnectionLeak());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -44,13 +42,11 @@ class checkConnectionLeak implements Consumer<Path> {
 			if (getConnectionCounter > closeConnectionCounter){
 				System.out.println(path + " getConnectionCounter: "+ getConnectionCounter + " AND closeConnectionCounter: " +closeConnectionCounter);
 			}
-			br.close();
-			fr.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			
+			br.close();
+			fr.close();
 		}
 	    
 		//path.getName(-1);
