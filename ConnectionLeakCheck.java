@@ -34,7 +34,7 @@ class checkConnectionLeak implements Consumer<Path> {
 			fr = new FileReader(path.toString());
 			br = new BufferedReader(fr);
 			while((line=br.readLine())!=null){
-				if (!line.startsWith("//")){
+				if (!line.trim().startsWith("//")){
 					if (line.contains("openSession()")){
 						getConnectionCounter++;
 					} else if (line.contains("ession.close()")){
